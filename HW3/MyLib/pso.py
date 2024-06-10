@@ -9,7 +9,6 @@ class Particle():
         self.local_best_fitness = float('-inf')
 
 
-
 class PSO():
     def __init__(self, particle_dimension: int, num_particles: int, num_iteration: int, fitness_func: Callable, ro1: float = 0.5, ro2: float = 0.5) -> None:
         self.dimension = particle_dimension
@@ -24,7 +23,7 @@ class PSO():
         self.global_best_fitness = float('-inf')
     
     def run(self) -> np.ndarray:
-        for _ in range(self.num_iteration):
+        for i in range(self.num_iteration):
             for particle in self.particles:
                 particle_fitness = self.fitness_func(particle.position)
 
@@ -36,9 +35,8 @@ class PSO():
                     particle.local_best_fitness = particle_fitness
                     
                 particle.velocity = particle.velocity + self.ro1 * (particle.local_best_position - particle.position) + self.ro2 * (self.global_best_position - particle.position)
-                
                 # add velocity limit if needed
-
                 particle.position = particle.position + particle.velocity
+            print(f'Iter: {i+1}, Global best fitness: {self.global_best_fitness}')
             
         return self.global_best_position
