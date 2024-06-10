@@ -127,13 +127,9 @@ class App():
             self.msg.config(text="Training...", fg="black")
 
             model_weights = self.model.getWeights()
-            print(model_weights)
             x = np.concatenate([w.flatten() for w in model_weights])
-            print(x)
-
             pso = PSO(len(x), NUMBER_OF_PARTICLE ,NUMBER_OF_ITERATION, finess_func, ro1=RO1, ro2=RO2)
             optimized_x = pso.run()
-            # self.model.layer_list[0].weights = optimized_x[:self.model.layer_list[0].weights.size].reshape(self.model.layer_list[0].weights.shape)
 
 
             self.model.setWeights_1d(optimized_x)
@@ -241,3 +237,7 @@ class App():
     
     def reset_model(self) -> None:
         self.model = self.default_model
+        self.msg.config(text="Model Reset", fg="black")
+        print("Model Reset")
+        self.draw_playground()
+        self.animation.event_source.stop()
